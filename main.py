@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from PyEMD import EMD
 import numpy as np
@@ -35,7 +34,9 @@ emd = EMD()
 IMFs = np.zeros((array.shape[0], array.shape[1]))
 for index, row in enumerate(array):
     x = emd(row)
-    IMFs[index] = x[0]
+    variations = np.var(x, axis=1)
+    index_with_most_variation = np.argmax(variations)
+    IMFs[index] = x[index_with_most_variation]
 
 IMFs = IMFs.reshape(IMFs.shape[0],-1)
 
